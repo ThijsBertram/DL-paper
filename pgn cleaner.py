@@ -11,8 +11,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import StaleElementReferenceException, ElementNotInteractableException
 import hashlib
 
-pgn = [['1. e4 d5 2. Bb5', 0]]
-
+curdir = os.getcwd()
 
 def flatten_to_board_arr(board_arr):
     shell = np.zeros((8, 8), dtype='U10')
@@ -42,16 +41,6 @@ def count_down():
     print('1')
     time.sleep(1)
     return
-
-
-board_array = np.asarray([['bRo', 'bKn', 'bBi', 'bQu', 'bKi', 'bBi', 'bKn', 'bRo'],
-               ['bPa', 'bPa', 'bPa', '---', 'bPa', 'bPa', 'bPa', 'bPa'],
-               ['---', '---', '---', '---', '---', '---', '---', '---'],
-               ['---', 'wBi', '---', 'bPa', '---', '---', '---', '---'],
-               ['---', '---', '---', '---', 'wPa', '---', '---', '---'],
-               ['---', '---', '---', '---', '---', '---', '---', '---'],
-               ['wP a', 'wPa', 'wPa', 'wPa', '---', 'wPa', 'wPa', 'wPa'],
-               ['wRo', 'wKn', 'wBi', 'wQu', 'wKi', '---', 'wKn', 'wRo']])
 
 
 def one_hot_flatten(board_arr):
@@ -127,7 +116,7 @@ def get_pgn_score(pgn_list):
     from selenium import webdriver
     from selenium.webdriver.firefox.options import Options
 
-    os.chdir('D:/thijs/Github/chess-evaluator')
+    os.chdir(curdir)
     driver_dir = str(Path.cwd() / 'geckodriver.exe')
     driver = webdriver.Firefox(executable_path=driver_dir)
     driver.set_page_load_timeout(1800)  # set time_out time
@@ -227,7 +216,7 @@ def get_pgn_score(pgn_list):
             if count % 250 == 0:
                 rows_to_append = []
                 count = 0
-                with open('D:/thijs/Github/chess-evaluator/data.pickle', 'rb') as pickle_in:
+                with open(curdir + '/data/data.pickle', 'rb') as pickle_in:
                     train_data = np.asarray(pickle.load(pickle_in))
                     nr_rows = train_data.shape[0]
                     hashes = train_data[:,0]
@@ -267,7 +256,7 @@ def get_pgn_score(pgn_list):
 #     pickle.dump(dataset, pickle_out)
 
 def get_train_data(path_to_pickle):
-    pgn_dir = 'C:/users/thijs/Downloads/pgn/Players/'
+    pgn_dir = curdir + '/pgn/Players/'
     for file in os.listdir(pgn_dir):
         if '.pgn' in file:
             print('---------------------------------------------------------------------------------------------')
@@ -279,21 +268,5 @@ def get_train_data(path_to_pickle):
             print()
     return
 
-get_train_data('D:/thijs/Github/chess-evaluator/data.pickle')
+get_train_data(curdir + '/data/data.pickle')
 
-# print()f
-# print()
-# with open('C:/users/thijs/Github/chess-evaluator/data.pickle', 'rb') as pickle_in:
-#     pick = np.asarray(pickle.load(pickle_in))
-#     print(pick.shape)
-#     for row in pick:
-#         print(row)
-
-
-# def gather_data(path_to_dataset, pgn_directory):
-#     if pgn_directory
-#     'C:/users/thijs/Downloads/pgn/Players/Alekhine.pgn'
-#     sample_pgn_list = pgn_sample()
-#
-# def gather_data(path_to_pickle):
-#     dataset = open(path_to_pickle)

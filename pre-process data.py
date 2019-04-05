@@ -11,8 +11,9 @@ from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import StaleElementReferenceException, ElementNotInteractableException
 import hashlib
 
+curdir = os.getcwd()
 
-with open(os.getcwd() + '\data\\' + '\data.pickle', 'rb') as pickle_in:
+with open(curdir + '/data/data.pickle', 'rb') as pickle_in:
     data = pickle.load(pickle_in)
 
 print(data[0])
@@ -48,6 +49,7 @@ y_test_enc = np.asarray(enc.fit_transform(np.asarray(y_test).reshape((len(y_test
 X_train = np.asarray([[int(x) for x in s.split(' ')] for s in X_train], dtype='int8').reshape((len(X_train), 769))
 X_test = np.asarray([[int(x) for x in s.split(' ')] for s in X_test], dtype='int8').reshape((len(X_test), 769))
 
+os.chdir(curdir + '/data/')
 
 with open('X_train.npy', 'wb') as pickle_out:
     pickle.dump(X_train, pickle_out)
